@@ -1,32 +1,27 @@
-# Prerequisites
-*.d
+# EPICS installation dirs
+/cfg/
+/bin/
+/lib/
+/db/
+/dbd/
+/html/
+/include/
+/templates/
+/configure/*.local
+envPaths
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# EPICS installation dirs in *Top
+/*Top/cfg/
+/*Top/bin/
+/*Top/lib/
+/*Top/db/
+/*Top/dbd/
+/*Top/html/
+/*Top/include/
+/*Top/templates/
+/*Top/configure/*.local
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+O.*/
+/QtC-*
+*.orig
+*.log
