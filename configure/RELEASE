@@ -30,7 +30,7 @@
 #SNCSEQ = $(MODULES)/seq-ver
 
 # EPICS_BASE should appear last so earlier modules can override stuff:
-EPICS_BASE = /home/ralph/work/EPICS/base/3.15
+#EPICS_BASE = /path/to/epics/base
 
 # Set RULES here if you want to use build rules from somewhere
 # other than EPICS_BASE:
@@ -40,4 +40,3 @@ EPICS_BASE = /home/ralph/work/EPICS/base/3.15
 # without having to modify the configure/RELEASE file itself.
 -include $(TOP)/../RELEASE.local
 -include $(TOP)/configure/RELEASE.local
-

@@ -5,19 +5,27 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
 
+ifdef GTEST_HOME
+
 #==================================================
-# build a support library
+# Build EPICS gtest_main library (uses TAP output)
 
-LIBRARY_IOC += gtestSup
+LIBRARY_HOST += epics_gtest_main
+epics_gtest_main_SRCS += gtest_main.cc
+epics_gtest_main_LIBS += gtest
 
-# specify all source files to be compiled and added to the library
-#gtestSup_SRCS += xxx
+ifneq ($(GTEST_HOME),SYSTEM)
+USR_INCLUDES += -I$(GTEST_HOME)/googletest/include
+gtest_DIR = $(GTEST_HOME)/googletest
+endif
 
-gtestSup_LIBS += $(EPICS_BASE_IOC_LIBS)
+CFG += RULES_GTEST
+CFG += CONFIG_GTEST
+
+endif
 
 #===========================
 
 include $(TOP)/configure/RULES
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE
-
