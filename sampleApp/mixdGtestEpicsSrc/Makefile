@@ -5,18 +5,19 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
 
+# to allow the locally created perl tool to be found
+GTEST_BIN = $(INSTALL_BIN)
+
 #=============================
 # Build tests
 
 GTESTPROD_HOST += gsample1
 gsample1_SRCS += gsample1.cpp
 GTESTS += gsample1
-GTEST_SUITES += StringComparison
 
 GTESTPROD_HOST += gsample2
 gsample2_SRCS += gsample2.cpp
 GTESTS += gsample2
-GTEST_SUITES += IntComparison ShortComparison
 
 #=============================
 

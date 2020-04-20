@@ -3,6 +3,7 @@
 # GTEST_HOME - pointer to the Google Test location
 #   <not set> = do not use gtest
 #   SYSTEM    = libraries and headers are in a system location
+#               (deprecated)
 #   <path>    = libraries and headers are under <path>
 
 # A special version of gtest_main (that provides TAP output)
@@ -26,27 +27,30 @@ endif
 $(foreach testprod, $(GTESTPROD_HOST), $(eval $(call gtest_prod_template,$(testprod))))
 TESTPROD_HOST += $(GTESTPROD_HOST)
 
-# Enable testing if this host can run tests on the current target
+# Enable testing if this host can run tests for the current target
 ifneq (,$(findstring $(T_A),$(EPICS_HOST_ARCH) $(CROSS_COMPILER_RUNTEST_ARCHS)))
-  RUNTESTS_ENABLED = YES
-  # workaround for missing $(strip ) in base's RULES_BUILD test-results: recipe (352ff.)
-  ifneq (,$(strip $(GTEST_SUITES)))
-    TAPFILES += $(addsuffix .tap,$(GTEST_SUITES))
-  endif
+RUNTESTS_ENABLED = YES
+GTESTLISTS = $(addsuffix .list,$(GTESTS))
+JUNITFILES = $(addsuffix .xml,$(GTESTS))
 endif
 
 #---------------------------------------------------------------
-# Automated testing
+# Automated testing using Google Test
 
-RUN_GTESTS = $(addsuffix .run,$(GTESTS))
+GTESTS_MAKE = $(addsuffix .make,$(GTESTS))
 
-.PHONY: $(RUN_GTESTS)
-runtests:: $(RUN_GTESTS)
-tapfiles: $(RUN_GTESTS)
+runtests: $(JUNITFILES)
 
-$(RUN_GTESTS): %.run: %$(EXE)
-ifdef RUNTESTS_ENABLED
-	./$(basename $@)$(EXE)
-endif
+$(GTESTLISTS): %.list: %$(EXE)
+	@$(RM) $@
+	@./$< --gtest_list_tests > $@
+
+$(GTESTS_MAKE): %.make: %.list
+	@$(RM) $@
+	@$(PERL) $(GTEST_BIN)/makeFromList.pl $*
+
+include $(GTESTS_MAKE)
+
+TAPFILES += $(foreach gtest, $(GTESTS), $($(gtest)_TAPFILES))
 
 endif

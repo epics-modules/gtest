@@ -19,6 +19,8 @@ USR_INCLUDES += -I$(GTEST_HOME)/googletest/include
 gtest_DIR = $(GTEST_HOME)/googletest
 endif
 
+PERL_SCRIPTS += makeFromList.pl
+
 CFG += RULES_GTEST
 CFG += CONFIG_GTEST
 
