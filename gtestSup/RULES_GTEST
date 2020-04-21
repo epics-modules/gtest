@@ -1,28 +1,14 @@
-# Definitions for Google Test
+# Definitions for Google Test / Google Mock
 
-# GTEST_HOME - pointer to the Google Test location
-#   <not set> = do not use gtest
-#   SYSTEM    = libraries and headers are in a system location
-#               (deprecated)
-#   <path>    = libraries and headers are under <path>
+# The EPICS module GTEST (https://github.com/epics-modules/gtest)
+# provides the Google Test and Google Mock libraries (statically built)
+# and a tap-enhanced version of gtest_main in library epics_gtest_main
 
-# A special version of gtest_main (that provides TAP output)
-# is provided by EPICS Base in library epics_gtest_main
-
-ifdef GTEST_HOME
-
-ifeq ($(GTEST_HOME),SYSTEM)
-define gtest_prod_template
-  $(1)_SYS_LIBS += gtest epics_gtest_main pthread
-endef
-else
 define gtest_prod_template
   $(1)_SYS_LIBS += pthread
   $(1)_LIBS += gmock gtest epics_gtest_main
   $(1)_INCLUDES += -I$(GTEST_HOME)/googletest/include
 endef
-gtest_DIR = $(GTEST_HOME)/googletest
-endif
 
 $(foreach testprod, $(GTESTPROD_HOST), $(eval $(call gtest_prod_template,$(testprod))))
 TESTPROD_HOST += $(GTESTPROD_HOST)
@@ -52,5 +38,3 @@ $(GTESTS_MAKE): %.make: %.list
 include $(GTESTS_MAKE)
 
 TAPFILES += $(foreach gtest, $(GTESTS), $($(gtest)_TAPFILES))
-
-endif
