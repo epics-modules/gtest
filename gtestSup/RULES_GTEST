@@ -18,7 +18,7 @@ endef
 else
 define gtest_prod_template
   $(1)_SYS_LIBS += pthread
-  $(1)_LIBS += gtest epics_gtest_main
+  $(1)_LIBS += gmock gtest epics_gtest_main
   $(1)_INCLUDES += -I$(GTEST_HOME)/googletest/include
 endef
 gtest_DIR = $(GTEST_HOME)/googletest

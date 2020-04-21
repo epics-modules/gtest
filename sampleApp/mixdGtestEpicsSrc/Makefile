@@ -19,6 +19,10 @@ GTESTPROD_HOST += gsample2
 gsample2_SRCS += gsample2.cpp
 GTESTS += gsample2
 
+GTESTPROD_HOST += gsample3
+gsample3_SRCS += gsample3.cpp
+GTESTS += gsample3
+
 #=============================
 
 PROD_LIBS += Com
