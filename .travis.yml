@@ -1,0 +1,82 @@
+# .travis.yml for use with EPICS Base ci-scripts
+# (see: https://github.com/epics-base/ci-scripts)
+
+language: cpp
+compiler: gcc
+dist: xenial
+
+cache:
+  directories:
+  - $HOME/.cache
+
+env:
+  global:
+    - SETUP_PATH=.ci-local:.ci
+    - EXTRA="CMD_CXXFLAGS=-std=c++11"
+
+addons:
+  apt:
+    packages:
+    # for all EPICS builds
+    - libreadline6-dev
+    - libncurses5-dev
+    - perl
+    # for clang compiler
+    - clang
+    # for RTEMS cross builds
+    - g++-mingw-w64-i686
+    - qemu-system-x86
+  homebrew:
+    packages:
+    # for all EPICS builds
+    - bash
+    update: true
+
+install:
+  - ./.ci/travis/prepare.sh
+
+script:
+  - ./.ci/travis/build.sh
+
+# If you need to do more during install and build,
+# add a local directory to your module and do e.g.
+#  - ./.ci-local/travis/install-extras.sh
+
+# Define build jobs
+
+# Well-known variables to use
+# SET         source setup file
+# ADD_MODULES extra modules (for a specific job)
+# EXTRA       content will be added to make command line
+# STATIC      set to YES for static build (default: NO)
+# TEST        set to NO to skip running the tests (default: YES)
+# VV          set to make build scripts verbose (default: unset)
+
+# Usually from setup files, but may be specified or overridden
+#  on a job line
+# MODULES     list of dependency modules
+# BASE        branch or release tag name of the EPICS Base to use
+# <MODULE>    branch or release tag for a specific module
+# ...         see README for setup file syntax description
+
+jobs:
+  include:
+
+# Different configurations of default gcc and clang
+
+  - env: BASE=3.15
+
+  - env: BASE=3.15
+    compiler: clang
+
+# Cross-compilation to RTEMS
+
+  - env: BASE=3.15 RTEMS=4.10 TEST=NO
+
+  - env: BASE=3.15 RTEMS=4.9 TEST=NO
+
+# MacOS build
+
+  - env: BASE=3.15
+    os: osx
+    compiler: clang
