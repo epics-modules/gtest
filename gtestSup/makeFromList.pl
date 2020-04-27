@@ -36,8 +36,12 @@ while( my $line = <IN>)  {
 }
 
 print OUT "${gtest}_TAPFILES += ", join(' ', @taps), "\n";
-print OUT "\$(${gtest}_TAPFILES) ${gtest}.xml &: $gtest\$(EXE)\n";
-print OUT "\t./\$< --gtest_output_tap --gtest_output=xml:$gtest.xml\n";
+print OUT "\$(${gtest}_TAPFILES) ${gtest}.xml: .$gtest.run\n";
+print OUT "\t\@:\n";
+print OUT ".$gtest.run: $gtest\$(EXE)\n";
+print OUT "\t\@echo Running test $gtest...\n";
+print OUT "\t\@./\$< --gtest_output_tap --gtest_output=xml:$gtest.xml\n";
+print OUT "\t\@touch .$gtest.run\n";
 
 close IN;
 close OUT;
