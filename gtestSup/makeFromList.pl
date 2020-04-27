@@ -31,7 +31,7 @@ while( my $line = <IN>)  {
     if ($line =~ m/^[^[:space:]]*.$/) {
         $line =~ s/.$//;
         chomp($line);
-        push @taps, "$line.tap"
+        push @taps, "$gtest-$line.tap"
     }
 }
 
@@ -40,7 +40,7 @@ print OUT "\$(${gtest}_TAPFILES) ${gtest}.xml: .$gtest.run\n";
 print OUT "\t\@:\n";
 print OUT ".$gtest.run: $gtest\$(EXE)\n";
 print OUT "\t\@echo Running test $gtest...\n";
-print OUT "\t\@./\$< --gtest_output_tap --gtest_output=xml:$gtest.xml\n";
+print OUT "\t\@GTEST_TAP_FILENAME_PREFIX=$gtest- ./\$< --gtest_output_tap --gtest_output=xml:$gtest.xml\n";
 print OUT "\t\@touch .$gtest.run\n";
 
 close IN;
