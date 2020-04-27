@@ -24,8 +24,10 @@ endif
 # Automated testing using Google Test
 
 GTESTS_MAKE = $(addsuffix .make,$(GTESTS))
+GTESTS_RUN = $(addsuffix .run,$(GTESTS))
+.PHONY: $(GTESTS_RUN)
 
-runtests: $(JUNITFILES)
+runtests: $(GTESTS_RUN)
 
 $(GTESTLISTS): %.list: %$(EXE)
 	@$(RM) $@
