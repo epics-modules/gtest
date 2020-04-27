@@ -5,9 +5,6 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
 
-# to allow the locally created perl tool to be found
-GTEST_BIN = $(INSTALL_BIN)
-
 #=============================
 # Build tests
 

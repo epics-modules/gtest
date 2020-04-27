@@ -38,6 +38,10 @@ CHECK_RELEASE = YES
 # Google Test and Google Mock should be used with static linking
 SHARED_LIBRARIES = NO
 
+# Provide GTEST settings for the module itself
+GTEST = $(TOP)
+GTEST_BIN = $(TOP)/bin/$(T_A)
+
 # These allow developers to override the CONFIG_SITE variable
 # settings without having to modify the configure/CONFIG_SITE
 # file itself.
