@@ -1,0 +1,75 @@
+# Google Test / Google Mock for EPICS
+
+# Compatibility RULES file to use the module on older versions
+# of EPICS Base that do not have the necessary changes in the
+# EPICS Build system.
+
+# Use this file by including it from a Makefile with Google Test
+# code, after including the Base RULES, like this:
+
+#   #=============================
+#
+#   include $(TOP)/configure/RULES
+#   #----------------------------------------
+#   #  ADD RULES AFTER THIS LINE
+#
+#   include $(GTEST)/cfg/compat.RULES_BUILD
+
+
+# Skip if we are running against a new enough base
+
+ifndef TESTSCRIPTS.t
+
+# Create the .t variables needed for the updated rules
+ifneq (,$(filter $(T_A), $(EPICS_HOST_ARCH) $(CROSS_COMPILER_RUNTEST_ARCHS)))
+RUNTESTS_ENABLED = YES
+TESTSCRIPTS.t := $(filter %.t, $(TESTSCRIPTS))
+TESTSCRIPTS =
+TAPFILES.t += $(TESTSCRIPTS.t:.t=.tap)
+TAPFILES += $(TAPFILES.t)
+JUNITFILES.t += $(TESTSCRIPTS.t:.t=.xml)
+endif
+
+# Remove existing top level runtest rule (that runs perl)
+runtests: run-perl-tests
+	@:
+
+# Re-add the same recipe, but only apply it to perl based tests
+run-perl-tests: $(TESTSCRIPTS.t)
+ifneq ($(TESTSCRIPTS.t),)
+ifdef RUNTESTS_ENABLED
+	-$(PERL) -MTest::Harness -e 'runtests @ARGV if @ARGV;' $^
+endif
+endif
+
+# Add the CURRENT_* version of the clean rule
+CURRENT_TAPFILES := $(wildcard $(TAPFILES))
+CURRENT_JUNITFILES := $(wildcard $(JUNITFILES))
+
+clean-tests:
+ifneq ($(CURRENT_TAPFILES),)
+	$(RM) $(CURRENT_TAPFILES)
+endif
+ifneq ($(CURRENT_JUNITFILES),)
+	$(RM) $(CURRENT_JUNITFILES)
+endif
+
+# Delete existing pattern rules
+%.tap: %.t
+%.xml: %.tap
+
+# Re-add these rules as static pattern rules for the .t variables
+$(TAPFILES.t): %.tap: %.t
+ifdef RUNTESTS_ENABLED
+	-$(PERL) $< -tap > $@
+endif
+
+$(JUNITFILES.t): %.xml: %.tap
+	$(TAPTOJUNIT) --puretap --output $@ --input $< $*
+
+# Add noop rule for fake junitfiles that are added by old RULES_BUILD
+FAKE_JUNITFILES = $(foreach gtest, $(GTESTS), $($(gtest)_TAPFILES))
+$(FAKE_JUNITFILES:.tap=.xml): %.xml: %.tap
+	@:
+
+endif   # ifndef TESTSCRIPTS.t

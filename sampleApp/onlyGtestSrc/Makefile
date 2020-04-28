@@ -25,3 +25,4 @@ GTESTS += gsample3
 include $(TOP)/configure/RULES
 #----------------------------------------
 #  ADD RULES AFTER THIS LINE
+include $(GTEST)/cfg/compat.RULES_BUILD

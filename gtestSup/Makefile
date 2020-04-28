@@ -17,6 +17,7 @@ epics_gtest_main_LIBS += gtest
 PERL_SCRIPTS += makeFromList.pl
 
 CFG += RULES_GTEST
+CFG += compat.RULES_BUILD
 
 endif
 
