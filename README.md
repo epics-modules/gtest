@@ -6,7 +6,7 @@ build system.
 ## Features
 
 Google Test and Google Mock 1.10.0, statically built with the EPICS
-build system, using your specific configuration of EPICS Base,
+build system, thus using your specific configuration of EPICS Base,
 compilers, host platforms etc.
 
 Added TAP listener to create test reports in the TAP standard that
@@ -19,11 +19,16 @@ Test executables as part of the regular `make runtests` and
 Easy configuration in any EPICS Makefile;
 EPICS unit tests and Google Tests can live in the same directory.
 
+Compatibility RULES file that allows using this module with older
+releases of EPICS Base.
+
 ## Prerequisites
 
-Recent versions of the EPICS 3.15 or EPICS 7 release series.
+Recent versions of the EPICS 3.15 or EPICS 7 release series are
+supported out-of-the-box. Using the provided compatibility rules
+file, the full functionality is available with older releases.
 
-Compiler that implements the C++11 standard.
+A compiler that implements the C++11 standard.
 
 ## Usage
 
@@ -33,8 +38,8 @@ through `RELEASE.local` mechanism).
 Set `GTEST=/path/to/gtest/module` in your module's dependency
 configuration (e.g., `RELEASE.local`).
 
-Add test code in e.g. `myTest.cpp` (multiple test suites supported)
-to the `Makefile`:
+Add test code in e.g. `myTest.cpp` (multiple test suites per source
+file are supported) to the `Makefile`:
 
 ```makefile
 GTESTPROD_HOST += myTest
@@ -42,12 +47,29 @@ gsample1_SRCS += myTest.cpp
 GTESTS += myTest
 ```
 
+If you are using an older release of EPICS Base, include the
+compatibility rules file at the end of your `Makefile`:
+
+```makefile
+include $(GTEST)/cfg/compat.RULES_BUILD
+```
+
 Run `make test-results`.
+
+When using the compatibility rules, you will see some warnings about
+make rules for test related targets being overwritten and/or ignored.
+This is expected, as it is the way the compatibility rules file works:
+it overwrites some of the test rules from EPICS Base to work with
+Google Test. This is done only for the make run in the directories
+where Google Tests live and you include that compatibility rules file;
+your Base installation (and the other/remaining builds) are left
+untouched.
 
 ## License
 
 The Google Test / Google Mock framework is distributed under the
 [3-Clause BSD License][license.bsd].
+The TAP listener is distributed under the [MIT License][license.mit].
 EPICS is distributed under the [EPICS Open License][license.epics].
 
 <!-- Links -->
@@ -55,4 +77,5 @@ EPICS is distributed under the [EPICS Open License][license.epics].
 [googletest]: https://github.com/google/googletest
 
 [license.bsd]: https://opensource.org/licenses/BSD-3-Clause
+[license.mit]: https://opensource.org/licenses/MIT
 [license.epics]: https://epics-controls.org/epics-open-license
