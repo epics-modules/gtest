@@ -5,8 +5,7 @@
 # and a tap-enhanced version of gtest_main in library epics_gtest_main
 
 define gtest_prod_template
-  $(1)_SYS_LIBS += pthread
-  $(1)_LIBS += gmock gtest epics_gtest_main
+  $(1)_LIBS += epics_gtest_main gmock gtest
 endef
 
 $(foreach testprod, $(GTESTPROD_HOST), $(eval $(call gtest_prod_template,$(testprod))))
