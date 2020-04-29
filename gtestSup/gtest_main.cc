@@ -8,10 +8,11 @@
  *  Author: Ralph Lange <ralph.lange@gmx.de>
  */
 
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "tap.h"
 
-GTEST_API_ int main(int argc, char **argv) {
+GTEST_API_ int main(int argc, char** argv) {
     bool addTapListener = false;
 
     if (argc > 1) {
@@ -25,7 +26,7 @@ GTEST_API_ int main(int argc, char **argv) {
         }
     }
 
-    testing::InitGoogleTest(&argc, argv);
+    testing::InitGoogleMock(&argc, argv);
 
     if (addTapListener) {
         testing::TestEventListeners& listeners = testing::UnitTest::GetInstance()->listeners();
@@ -33,4 +34,3 @@ GTEST_API_ int main(int argc, char **argv) {
     }
     return RUN_ALL_TESTS();
 }
-

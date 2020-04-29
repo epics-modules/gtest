@@ -12,7 +12,7 @@ ifdef GTEST
 
 LIBRARY_HOST += epics_gtest_main
 epics_gtest_main_SRCS += gtest_main.cc
-epics_gtest_main_LIBS += gtest
+epics_gtest_main_LIBS += gmock gtest
 
 PERL_SCRIPTS += makeFromList.pl
 
