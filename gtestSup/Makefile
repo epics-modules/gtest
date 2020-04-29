@@ -5,7 +5,7 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
 
-ifdef GTEST_HOME
+ifdef GTEST
 
 #==================================================
 # Build EPICS gtest_main library (uses TAP output)
