@@ -20,6 +20,8 @@ cache:
 init:
   # Set autocrlf to make batch files work
   - git config --global core.autocrlf true
+  # print the connection info for RDP connections (see 'debugging' below)
+  #- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 # Set clone depth (do not fetch complete history)
 clone_depth: 5
@@ -57,7 +59,7 @@ environment:
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
   - CMP: vs2019
     BASE: 7.0
-    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    BASE_RECURSIVE: NO
   - CMP: mingw
     BASE: 3.15
   - CMP: vs2017
@@ -117,9 +119,8 @@ on_finish:
 ## note that you will need to connect within the usual build timeout limit (60 minutes)
 ## so you may want to adjust the build matrix above to just build the one of interest
 
-# print the connection info
-#init:
-#  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# to print the RDP connection info
+# uncomment the appropriate line in the init: section above
 
 # block a failed build (until the watchdog barks)
 #on_failure:
