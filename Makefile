@@ -9,8 +9,10 @@ DIRS += $(wildcard *App)
 DIRS += $(wildcard *Top)
 DIRS += $(wildcard iocBoot)
 
-DIRS += googletest/googletest
-DIRS += googletest/googlemock
+DIRS += googletest/googletest/include
+DIRS += googletest/googletest/src
+DIRS += googletest/googlemock/include
+DIRS += googletest/googlemock/src
 
 # The build order is controlled by these dependency rules:
 
@@ -31,7 +33,9 @@ iocBoot_DEPEND_DIRS += $(filter %App,$(DIRS))
 
 # Add any additional dependency rules here:
 
-gtestSup_DEPEND_DIRS += googletest/googletest
-gtestSup_DEPEND_DIRS += googletest/googlemock
+gtestSup_DEPEND_DIRS += googletest/googletest/src
+googletest/googletest/src_DEPEND_DIRS += googletest/googletest/include
+gtestSup_DEPEND_DIRS += googletest/googlemock/src
+googletest/googlemock/src_DEPEND_DIRS += googletest/googlemock/include
 
 include $(TOP)/configure/RULES_TOP
