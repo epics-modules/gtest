@@ -8,7 +8,19 @@ include $(TOP)/configure/CONFIG
 #=============================
 # Build tests
 
-PROD_LIBS += Com
+ifneq ($(BASE_3_14),YES)
+TARGETS += $(COMMON_DIR)/dbTestIoc.dbd
+DBDDEPENDS_FILES += dbTestIoc.dbd$(DEP)
+dbTestIoc_DBD += menuGlobal.dbd
+dbTestIoc_DBD += menuConvert.dbd
+dbTestIoc_DBD += menuScan.dbd
+dbTestIoc_DBD += aiRecord.dbd
+TESTFILES += $(COMMON_DIR)/dbTestIoc.dbd ../test.db
+
+testHarness_SRCS += dbTestIoc_registerRecordDeviceDriver.cpp
+endif
+
+PROD_LIBS = $(EPICS_BASE_IOC_LIBS)
 
 TESTPROD_HOST += esample1
 esample1_SRCS += esample1.c
@@ -19,6 +31,14 @@ TESTPROD_HOST += esample2
 esample2_SRCS += esample2.c
 testHarness_SRCS += esample2.c
 TESTS += esample2
+
+ifneq ($(BASE_3_14),YES)
+TESTPROD_HOST += esample3
+esample3_SRCS += esample3.c
+esample3_SRCS += dbTestIoc_registerRecordDeviceDriver.cpp
+testHarness_SRCS += esample3.c
+TESTS += esample3
+endif
 
 # The testHarness runs all the test programs in a known working order.
 testHarness_SRCS += epicsRunSampleTests.c
