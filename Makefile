@@ -37,5 +37,6 @@ gtestSup_DEPEND_DIRS += googletest/googletest/src
 googletest/googletest/src_DEPEND_DIRS += googletest/googletest/include
 gtestSup_DEPEND_DIRS += googletest/googlemock/src
 googletest/googlemock/src_DEPEND_DIRS += googletest/googlemock/include
+googletest/googlemock/src_DEPEND_DIRS += googletest/googletest/src
 
 include $(TOP)/configure/RULES_TOP
