@@ -64,16 +64,30 @@ jobs:
 
 # Different configurations of default gcc and clang
 
-  - env: BASE=3.15
+  - env: BASE=7.0 BASE_RECURSIVE=NO
+
+  - env: BASE=7.0 BASE_RECURSIVE=NO
+    compiler: clang
+
+  - env: BASE=7.0 STATIC=YES BASE_RECURSIVE=NO
 
   - env: BASE=3.15
-    compiler: clang
+
+  - env: BASE=3.15 STATIC=YES
+
+  - env: BASE=R3.15.3
+
+  - env: BASE=R3.15.3 STATIC=YES
+
+  - env: BASE=R3.14.12.8
+
+  - env: BASE=R3.14.12.8 STATIC=YES
 
 # Cross-compilation to RTEMS
 
-  - env: BASE=3.15 RTEMS=4.10 TEST=NO
+  - env: BASE=3.15 RTEMS=4.10 EXTRA=
 
-  - env: BASE=3.15 RTEMS=4.9 TEST=NO
+  - env: BASE=3.15 RTEMS=4.9 EXTRA=
 
 # MacOS build
 
