@@ -8,6 +8,7 @@ define gtest_prod_template
   ifeq ($(CMPLR_CLASS),msvc)
     $(1)_LDFLAGS_WIN32 += -subsystem:console
   endif
+  $(1)_SYS_LIBS_Linux += pthread
   $(1)_LIBS += epics_gtest_main gmock gtest
 endef
 
