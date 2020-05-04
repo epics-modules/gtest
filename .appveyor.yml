@@ -48,7 +48,9 @@ image: Visual Studio 2019
 
 # Build Configurations: dll/static, regular/debug
 configuration:
+  - dynamic
   - static
+  - dynamic-debug
   - static-debug
 
 # Environment variables: compiler toolchain, base version, setup file, ...
@@ -69,7 +71,7 @@ environment:
     BASE: 3.15
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
   - CMP: vs2015
-    BASE: R3.15.2
+    BASE: R3.15.3
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
   - CMP: vs2019
     BASE: R3.14.12.8
