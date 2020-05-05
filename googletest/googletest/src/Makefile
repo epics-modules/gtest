@@ -5,6 +5,15 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS AFTER THIS LINE
 #=============================
 
+# Build the gtest library statically.
+
+# Important on Windows / Visual Studio:
+# If DLL builds are configured (SHARED=YES/STATIC=NO),
+# only set SHARED=NO (and don't set STATIC=YES as suggested)
+# to make sure compilation flags are consistent between
+# all libraries involved.
+SHARED_LIBRARIES = NO
+
 #================================================
 # Build GoogleTest libraries gtest and gtest_main
 
