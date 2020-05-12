@@ -114,7 +114,6 @@ test_script:
 
 on_finish:
   - ps: Get-ChildItem *.tap -Recurse -Force | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
-  - cmd: python .ci/appveyor/do.py build test-results -s
 
 #---------------------------------#
 #         debugging               #
