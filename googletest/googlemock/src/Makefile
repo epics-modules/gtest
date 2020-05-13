@@ -18,6 +18,11 @@ SHARED_LIBRARIES = NO
 LIBRARY_HOST += gmock
 LIBRARY_HOST += gmock_main
 
+ifneq (,$(findstring $(T_A),$(CROSS_COMPILER_RUNTEST_ARCHS)))
+LIBRARY_IOC += gmock
+LIBRARY_IOC += gmock_main
+endif
+
 SRC_DIRS += ../..
 
 gmock_SRCS += gmock-all.cc

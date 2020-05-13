@@ -20,6 +20,11 @@ SHARED_LIBRARIES = NO
 LIBRARY_HOST += gtest
 LIBRARY_HOST += gtest_main
 
+ifneq (,$(findstring $(T_A),$(CROSS_COMPILER_RUNTEST_ARCHS)))
+LIBRARY_IOC += gtest
+LIBRARY_IOC += gtest_main
+endif
+
 SRC_DIRS += ../..
 
 gtest_SRCS += gtest-all.cc
