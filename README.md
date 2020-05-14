@@ -28,7 +28,8 @@ releases of EPICS Base.
 supported out-of-the-box. Using the provided compatibility rules
 file, full functionality is available with older releases.
 
-- A compiler that implements the C++11 standard.
+- A compiler that implements the C++11 standard. \
+Microsoft Visual C++ needs to be from Visual Studio 2015 or newer.
 
 ## Usage
 
