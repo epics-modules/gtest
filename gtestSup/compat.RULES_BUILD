@@ -20,6 +20,11 @@
 
 ifndef TESTSCRIPTS.t
 
+# CMPLR_CLASS might not exist, so work around it
+ifeq ($(firstword $(CC)),cl)
+  USR_LDFLAGS += -subsystem:console
+endif
+
 # Create the .t variables needed for the updated rules
 ifneq (,$(filter $(T_A), $(EPICS_HOST_ARCH) $(CROSS_COMPILER_RUNTEST_ARCHS)))
 RUNTESTS_ENABLED = YES
