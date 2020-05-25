@@ -33,7 +33,7 @@ runtests: $(GTESTS_RUN)
 
 $(GTESTLISTS): %.list: %$(EXE)
 	@$(RM) $@
-	@./$< --gtest_list_tests > $@
+	"./$<" --gtest_list_tests > $@
 
 $(GTESTS_MAKE): %.make: %.list
 	@$(RM) $@

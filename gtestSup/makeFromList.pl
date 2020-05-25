@@ -38,10 +38,11 @@ while( my $line = <IN>)  {
 print OUT "${gtest}_TAPFILES += ", join(' ', @taps), "\n";
 print OUT "\$(${gtest}_TAPFILES) ${gtest}.xml: .$gtest.run\n";
 print OUT "\t\@:\n";
+print OUT "$gtest.run .$gtest.run: export GTEST_TAP_FILENAME_PREFIX=$gtest-\n";
 print OUT "$gtest.run .$gtest.run: $gtest\$(EXE)\n";
-print OUT "\t\@echo Running test $gtest...\n";
-print OUT "\t\@GTEST_TAP_FILENAME_PREFIX=$gtest- ./\$< --gtest_output_tap --gtest_color=yes --gtest_output=xml:$gtest.xml\n";
-print OUT "\t\@touch .$gtest.run\n";
+print OUT "\t\$(ECHO) \"Running test $gtest...\"\n";
+print OUT "\t\@\"./\$<\" --gtest_output_tap --gtest_color=yes --gtest_output=xml:$gtest.xml\n";
+print OUT "\t\@echo \"test run\" > .$gtest.run\n";
 
 close IN;
 close OUT;
