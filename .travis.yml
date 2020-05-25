@@ -83,11 +83,9 @@ jobs:
 
   - env: BASE=R3.14.12.8 STATIC=YES
 
-# Cross-compilation to RTEMS
-
-  - env: BASE=3.15 RTEMS=4.10 EXTRA=
-
-  - env: BASE=3.15 RTEMS=4.9 EXTRA=
+# Cross-compilation to RTEMS 4.x doesn't work (g++ 4.4.x is too old)
+#  - env: BASE=R3.16.2 RTEMS=4.10 EXTRA="CMD_CXXFLAGS=-std=c++0x"
+#  - env: BASE=R3.16.2 RTEMS=4.9 EXTRA="CMD_CXXFLAGS=-std=c++0x"
 
 # MacOS build
 
