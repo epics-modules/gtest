@@ -9,7 +9,7 @@ build system.
 system, thus using your specific configuration of EPICS Base,
 compilers, host platforms etc.
 
-- Added TAP listener to create test reports in the TAP standard that
+- TAP listener to create test reports in the TAP standard that
 EPICS uses.
 
 - Additional rules for the EPICS build system that build and run
@@ -20,16 +20,18 @@ Google Test executables as part of the regular `make runtests` and
 EPICS unit tests and Google Tests can live in the same directory.
 
 - Compatibility RULES file that allows using this module with older
-releases of EPICS Base.
+releases of EPICS Base. (Tested for 3.14.12.8 and above.)
 
 ## Prerequisites
 
 - Recent versions of the EPICS 3.15 or EPICS 7 release series are
 supported out-of-the-box. Using the provided compatibility rules
-file, full functionality is available with older releases.
+file, full functionality is available with older releases
+(3.14.12.8 and above).
 
-- A compiler that implements the C++11 standard. \
+- Googletest requires a compiler that implements the C++11 standard. \
 Microsoft Visual C++ needs to be from Visual Studio 2015 or newer.
+g++ needs to be 4.6 or above.
 
 ## Usage
 
