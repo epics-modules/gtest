@@ -41,4 +41,8 @@ $(GTESTS_MAKE): %.make: %.list
 
 include $(GTESTS_MAKE)
 
+# Can't do "undefine TAPFILES" so only define TAPFILES here if non-empty
+# (avoid old test-results rule breaking for TAPFILES = <space>)
+ifneq ($(strip $(foreach gtest, $(GTESTS), $($(gtest)_TAPFILES))),)
 TAPFILES += $(foreach gtest, $(GTESTS), $($(gtest)_TAPFILES))
+endif
