@@ -83,6 +83,14 @@ jobs:
 
   - env: BASE=R3.14.12.8 STATIC=YES
 
+# Trusty: compiler versions very close to RHEL 7
+
+  - env: BASE=7.0 BASE_RECURSIVE=NO
+    dist: trusty
+
+  - env: BASE=7.0 STATIC=YES BASE_RECURSIVE=NO
+    dist: trusty
+
 # Cross-compilation to RTEMS 4.x doesn't work (g++ 4.4.x is too old)
 #  - env: BASE=R3.16.2 RTEMS=4.10 EXTRA="CMD_CXXFLAGS=-std=c++0x"
 #  - env: BASE=R3.16.2 RTEMS=4.9 EXTRA="CMD_CXXFLAGS=-std=c++0x"
