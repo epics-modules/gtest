@@ -36,8 +36,8 @@ CHECK_RELEASE = YES
 #CROSS_OPT = NO
 
 # Provide GTEST settings for the module itself
-GTEST = $(TOP)
-GTEST_BIN = $(TOP)/bin/$(T_A)
+GTEST = $(INSTALL_LOCATION)
+GTEST_BIN = $(GTEST)/bin/$(T_A)
 
 # These allow developers to override the CONFIG_SITE variable
 # settings without having to modify the configure/CONFIG_SITE

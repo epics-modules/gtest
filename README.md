@@ -68,6 +68,20 @@ where you include that compatibility rules file;
 your Base installation (and all other/remaining builds) are left
 untouched.
 
+## Embed gtest into an EPICS 7 Installation
+
+Building gtest as an embedded module inside an EPICS 7 installation
+is supported.
+
+1. Put the gtest module into a subdirectory of `<EPICS7>/modules`, add
+   that subdirectory to `<EPICS7>/modules/Makefile.local` and
+   recompile Base.
+
+2. Set `GTEST=$(EPICS_BASE)` in your module's dependency
+   configuration (e.g., `RELEASE.local`).
+
+The remaining steps are the same as above.
+
 ## License
 
 The Google Test / Google Mock framework is distributed under the
