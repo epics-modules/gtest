@@ -5,44 +5,44 @@ build system.
 
 ## Features
 
-- Google Test and Google Mock 1.10.0, built with the EPICS build
-system, thus using your specific configuration of EPICS Base,
-compilers, host platforms etc.
+-   Google Test and Google Mock 1.10.0, built with the EPICS build
+    system, thus using your specific configuration of EPICS Base,
+    compilers, host platforms etc.
 
-- TAP listener to create test reports in the TAP standard that
-EPICS uses.
+-   TAP listener to create test reports in the TAP standard that
+    EPICS uses.
 
-- Additional rules for the EPICS build system that build and run
-Google Test executables as part of the regular `make runtests` and
-`make test-results` targets.
+-   Additional rules for the EPICS build system that build and run
+    Google Test executables as part of the regular `make runtests` and
+    `make test-results` targets.
 
-- Easy configuration in any EPICS Makefile;
-EPICS unit tests and Google Tests can live in the same directory.
+-   Easy configuration in any EPICS Makefile;
+    EPICS unit tests and Google Tests can live in the same directory.
 
-- Compatibility RULES file that allows using this module with older
-releases of EPICS Base. (Tested for 3.14.12.8 and above.)
+-   Compatibility RULES file that allows using this module with older
+    releases of EPICS Base. (Tested for 3.14.12.8 and above.)
 
 ## Prerequisites
 
-- Recent versions of the EPICS 3.15 or EPICS 7 release series are
-supported out-of-the-box. Using the provided compatibility rules
-file, full functionality is available with older releases
-(3.14.12.8 and above).
+-   Recent versions of the EPICS 3.15 or EPICS 7 release series are
+    supported out-of-the-box. Using the provided compatibility rules
+    file, full functionality is available with older releases
+    (3.14.12.8 and above).
 
-- Googletest requires a compiler that implements the C++11 standard. \
-Microsoft Visual C++ needs to be from Visual Studio 2015 or newer.
-g++ needs to be 4.6 or above.
+-   Googletest requires a compiler that implements the C++11 standard. \
+    Microsoft Visual C++ needs to be from Visual Studio 2015 or newer.
+    g++ needs to be 4.6 or above.
 
 ## Usage
 
-1. Build the gtest module using the standard techniques (e.g.,
-configure through `RELEASE.local` mechanism).
+1.  Build the gtest module using the standard techniques (e.g.,
+    configure through `RELEASE.local` mechanism).
 
-2. Set `GTEST=/path/to/gtest/module` in your module's dependency
-configuration (e.g., `RELEASE.local`).
+2.  Set `GTEST=/path/to/gtest/module` in your module's dependency
+    configuration (e.g., `RELEASE.local`).
 
-3. Write test code in e.g. `myTest.cpp` (multiple test suites per
-source file are supported) and add the test to the `Makefile`:
+3.  Write test code in e.g. `myTest.cpp` (multiple test suites per
+    source file are supported) and add the test to the `Makefile`:
 
 ```makefile
 GTESTPROD_HOST += myTest
@@ -50,14 +50,14 @@ myTest_SRCS += myTest.cpp
 GTESTS += myTest
 ```
 
-4. If you are using an older release of EPICS Base, include the
+4.  If you are using an older release of EPICS Base, include the
 compatibility rules file at the end of your `Makefile`:
 
 ```makefile
 include $(GTEST)/cfg/compat.RULES_BUILD
 ```
 
-5. Run `make test-results`.
+5.  Run `make test-results`.
 
 When using the compatibility rules, you will see some warnings about
 make rules for test related targets being overwritten and/or ignored.
@@ -73,12 +73,12 @@ untouched.
 Building gtest as an embedded module inside an EPICS 7 installation
 is supported.
 
-1. Put the gtest module into a subdirectory of `<EPICS7>/modules`, add
-   that subdirectory to `<EPICS7>/modules/Makefile.local` and
-   recompile Base.
+1.  Put the gtest module into a subdirectory of `<EPICS7>/modules`, add
+    that subdirectory to `<EPICS7>/modules/Makefile.local` and
+    recompile Base.
 
-2. Set `GTEST=$(EPICS_BASE)` in your module's dependency
-   configuration (e.g., `RELEASE.local`).
+2.  Set `GTEST=$(EPICS_BASE)` in your module's dependency
+    configuration (e.g., `RELEASE.local`).
 
 The remaining steps are the same as above.
 
