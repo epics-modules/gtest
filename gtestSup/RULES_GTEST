@@ -4,6 +4,9 @@
 # provides the Google Test and Google Mock libraries (statically built)
 # and a tap-enhanced version of gtest_main in library epics_gtest_main
 
+ifndef RULES_GTEST_INCLUDED
+RULES_GTEST_INCLUDED=1
+
 define gtest_prod_template
   ifeq ($(CMPLR_CLASS),msvc)
     $(1)_LDFLAGS_WIN32 += -subsystem:console
@@ -46,3 +49,7 @@ include $(GTESTS_MAKE)
 ifneq ($(strip $(foreach gtest, $(GTESTS), $($(gtest)_TAPFILES))),)
 TAPFILES += $(foreach gtest, $(GTESTS), $($(gtest)_TAPFILES))
 endif
+
+else
+    $(warning Warning: cfg/RULES_GTEST file included more than once.)
+endif # RULES_GTEST_INCLUDED
