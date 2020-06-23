@@ -22,7 +22,7 @@ TESTPROD_HOST += $(GTESTPROD_HOST)
 ifneq (,$(findstring $(T_A),$(EPICS_HOST_ARCH) $(CROSS_COMPILER_RUNTEST_ARCHS)))
 RUNTESTS_ENABLED = YES
 GTESTLISTS = $(addsuffix .list,$(GTESTS))
-JUNITFILES = $(addsuffix .xml,$(GTESTS))
+JUNITFILES = $(addsuffix -results.xml,$(GTESTS))
 endif
 
 #---------------------------------------------------------------

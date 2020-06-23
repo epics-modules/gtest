@@ -32,7 +32,7 @@ TESTSCRIPTS.t := $(filter %.t, $(TESTSCRIPTS))
 TESTSCRIPTS =
 TAPFILES.t += $(TESTSCRIPTS.t:.t=.tap)
 TAPFILES += $(TAPFILES.t)
-JUNITFILES.t += $(TESTSCRIPTS.t:.t=.xml)
+JUNITFILES.t += $(TESTSCRIPTS.t:.t=-results.xml)
 endif
 
 # Remove existing top level runtest rule (that runs perl)
@@ -69,7 +69,7 @@ ifdef RUNTESTS_ENABLED
 	-$(PERL) $< -tap > $@
 endif
 
-$(JUNITFILES.t): %.xml: %.tap
+$(JUNITFILES.t): %-results.xml: %.tap
 	$(TAPTOJUNIT) --puretap --output $@ --input $< $*
 
 # Add noop rule for fake junitfiles that are added by old RULES_BUILD
