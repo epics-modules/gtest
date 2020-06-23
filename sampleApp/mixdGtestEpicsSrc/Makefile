@@ -20,6 +20,8 @@ TESTFILES += $(COMMON_DIR)/dbTestIoc.dbd ../test.db
 testHarness_SRCS += dbTestIoc_registerRecordDeviceDriver.cpp
 endif
 
+USR_CPPFLAGS += -DUSE_TYPED_RSET
+
 PROD_LIBS = $(EPICS_BASE_IOC_LIBS)
 
 #=============================
