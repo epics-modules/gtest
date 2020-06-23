@@ -36,6 +36,14 @@ skip_commits:
     - '.travis.yml'
 
 #---------------------------------#
+#       additional packages       #
+#---------------------------------#
+
+install:
+# fetch submodules (like ci-scripts)
+  - cmd: git submodule update --init --recursive
+
+#---------------------------------#
 #   build matrix configuration    #
 #---------------------------------#
 
@@ -48,9 +56,9 @@ image: Visual Studio 2019
 
 # Build Configurations: dll/static, regular/debug
 configuration:
-  - dynamic
+  - default
   - static
-  - dynamic-debug
+  - debug
   - static-debug
 
 # Environment variables: compiler toolchain, base version, setup file, ...
@@ -87,18 +95,16 @@ platform:
 #     building & testing          #
 #---------------------------------#
 
-install:
-  - cmd: git submodule update --init --recursive
-  - cmd: python .ci/appveyor/do.py prepare
-
 build_script:
-  - cmd: python .ci/appveyor/do.py build
+  - cmd: python .ci/cue.py prepare
+  - cmd: python .ci/cue.py build
 
 test_script:
-  - cmd: python .ci/appveyor/do.py test
+  - cmd: python .ci/cue.py test
 
 on_finish:
   - ps: Get-ChildItem *.tap -Recurse -Force | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+  - cmd: python .ci/cue.py test-results
 
 #---------------------------------#
 #         debugging               #

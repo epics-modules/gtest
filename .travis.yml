@@ -13,6 +13,7 @@ env:
   global:
     - SETUP_PATH=.ci-local:.ci
     - EXTRA="CMD_CXXFLAGS=-std=c++11"
+    - BASE_RECURSIVE=NO
 
 addons:
   apt:
@@ -33,24 +34,26 @@ addons:
     update: true
 
 install:
-  - ./.ci/travis/prepare.sh
+  - python .ci/cue.py prepare
 
 script:
-  - ./.ci/travis/build.sh
+  - python .ci/cue.py build
+  - python .ci/cue.py test
+  - python .ci/cue.py test-results
 
-# If you need to do more during install and build,
-# add a local directory to your module and do e.g.
-#  - ./.ci-local/travis/install-extras.sh
 
 # Define build jobs
 
 # Well-known variables to use
 # SET         source setup file
 # ADD_MODULES extra modules (for a specific job)
-# EXTRA       content will be added to make command line
-# STATIC      set to YES for static build (default: NO)
+# BCFG        build configuration (static/debug/static-debug;
+#             default: shared-optimized)
 # TEST        set to NO to skip running the tests (default: YES)
 # VV          set to make build scripts verbose (default: unset)
+# EXTRA       content will be added to make command line
+# EXTRA1..5   more additional arguments for the make command
+#             (one argument per variable)
 
 # Usually from setup files, but may be specified or overridden
 #  on a job line
@@ -64,31 +67,31 @@ jobs:
 
 # Different configurations of default gcc and clang
 
-  - env: BASE=7.0 BASE_RECURSIVE=NO
+  - env: BASE=7.0
 
-  - env: BASE=7.0 BASE_RECURSIVE=NO
+  - env: BASE=7.0
     compiler: clang
 
-  - env: BASE=7.0 STATIC=YES BASE_RECURSIVE=NO
+  - env: BASE=7.0 BCFG=static
 
   - env: BASE=3.15
 
-  - env: BASE=3.15 STATIC=YES
+  - env: BASE=3.15 BCFG=static
 
   - env: BASE=R3.15.3
 
-  - env: BASE=R3.15.3 STATIC=YES
+  - env: BASE=R3.15.3 BCFG=static
 
   - env: BASE=R3.14.12.8
 
-  - env: BASE=R3.14.12.8 STATIC=YES
+  - env: BASE=R3.14.12.8 BCFG=static
 
 # Trusty: compiler versions very close to RHEL 7
 
-  - env: BASE=7.0 BASE_RECURSIVE=NO
+  - env: BASE=7.0
     dist: trusty
 
-  - env: BASE=7.0 STATIC=YES BASE_RECURSIVE=NO
+  - env: BASE=7.0 BCFG=static
     dist: trusty
 
 # Cross-compilation to RTEMS 4.x doesn't work (g++ 4.4.x is too old)
@@ -100,3 +103,20 @@ jobs:
   - env: BASE=3.15
     os: osx
     compiler: clang
+
+# Windows builds
+
+  - env: BASE=7.0
+    os: windows
+    compiler: vs2017
+
+  - env: BASE=7.0 BCFG=static
+    os: windows
+    compiler: vs2017
+
+  - env: BASE=R3.15.3
+    os: windows
+    compiler: vs2017
+
+  - env: BASE=7.0
+    os: windows
