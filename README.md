@@ -1,3 +1,7 @@
+<a target="_blank" href="http://semver.org">![Version][badge.version]</a>
+<a target="_blank" href="https://travis-ci.org/epics-modules/gtest">![Travis status][badge.travis]</a>
+<a target="_blank" href="https://ci.appveyor.com/project/epics-modules/gtest">![AppVeyor status][badge.appveyor]</a>
+
 # gtest - Google Test and Google Mock for EPICS
 This module adds the [Google Test and Google Mock][googletest]
 frameworks to EPICS, fully supported and integrated with the EPICS
@@ -90,6 +94,9 @@ The TAP listener is distributed under the [MIT License][license.mit]. \
 EPICS is distributed under the [EPICS Open License][license.epics].
 
 <!-- Links -->
+[badge.version]: https://badge.fury.io/gh/epics-modules%2Fgtest.svg
+[badge.travis]: https://travis-ci.org/epics-modules/gtest.svg?branch=master
+[badge.appveyor]: https://ci.appveyor.com/api/projects/status/0ei18dfxwkrq101o?svg=true
 
 [googletest]: https://github.com/google/googletest
 
