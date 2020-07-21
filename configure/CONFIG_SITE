@@ -35,6 +35,13 @@ CHECK_RELEASE = YES
 #HOST_OPT = NO
 #CROSS_OPT = NO
 
+# Important on Windows / Visual Studio:
+# If DLL builds are configured (SHARED=YES/STATIC=NO),
+# only set SHARED_LIBRARIES=NO (and don't set STATIC=YES)
+# to make sure compilation flags are consistent between
+# all libraries involved.
+SHARED_LIBRARIES = NO
+
 # Provide GTEST settings for the module itself
 GTEST = $(INSTALL_LOCATION)
 GTEST_BIN = $(GTEST)/bin/$(T_A)
