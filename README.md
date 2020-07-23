@@ -39,13 +39,26 @@ build system.
 
 ## Usage
 
-1.  Build the gtest module using the standard techniques (e.g.,
-    configure through `RELEASE.local` mechanism).
+1.  Configure the compiler on Linux to use the C++11 standard by adding
+    ```makefile
+    USR_CXXFLAGS_Linux += -std=c++11
+    ```
+    to the `CONFIG_SITE` file (or one of the host/target specific site
+    configuration files). \
+    Under specific circumstances, it is not possible to link objects
+    together that have been compiled using different C++ standard
+    settings (see this [StackOverflow thread][stackoverflow.linking]).
+    In those cases, setting this option globally in EPICS Base is
+    preferable.
 
-2.  Set `GTEST=/path/to/gtest/module` in your module's dependency
+2.  Build the gtest module using the standard techniques (e.g.,
+    configure the EPICS Base location through the `RELEASE.local`
+    mechanism).
+
+3.  Set `GTEST=/path/to/gtest/module` in your module's dependency
     configuration (e.g., `RELEASE.local`).
 
-3.  Write test code in e.g. `myTest.cpp` (multiple test suites per
+4.  Write test code in e.g. `myTest.cpp` (multiple test suites per
     source file are supported) and add the test to the `Makefile`:
 
 ```makefile
@@ -54,14 +67,14 @@ myTest_SRCS += myTest.cpp
 GTESTS += myTest
 ```
 
-4.  If you are using an older release of EPICS Base, include the
+5.  If you are using an older release of EPICS Base, include the
 compatibility rules file at the end of your `Makefile`:
 
 ```makefile
 include $(GTEST)/cfg/compat.RULES_BUILD
 ```
 
-5.  Run `make test-results`.
+6.  Run `make test-results`.
 
 When using the compatibility rules, you will see some warnings about
 make rules for test related targets being overwritten and/or ignored.
@@ -78,8 +91,9 @@ Building gtest as an embedded module inside an EPICS 7 installation
 is supported.
 
 1.  Put the gtest module into a subdirectory of `<EPICS7>/modules`, add
-    that subdirectory to `<EPICS7>/modules/Makefile.local` and
-    recompile Base.
+    that subdirectory to `<EPICS7>/modules/Makefile.local`, switch the
+    compiler on Linux to the C++11 standard (see above) and recompile
+    Base.
 
 2.  Set `GTEST=$(EPICS_BASE)` in your module's dependency
     configuration (e.g., `RELEASE.local`).
@@ -99,6 +113,7 @@ EPICS is distributed under the [EPICS Open License][license.epics].
 [badge.appveyor]: https://ci.appveyor.com/api/projects/status/0ei18dfxwkrq101o?svg=true
 
 [googletest]: https://github.com/google/googletest
+[stackoverflow.linking]: https://stackoverflow.com/questions/46746878/is-it-safe-to-link-c17-c14-and-c11-objects
 
 [license.bsd]: https://opensource.org/licenses/BSD-3-Clause
 [license.mit]: https://opensource.org/licenses/MIT
