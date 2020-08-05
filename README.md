@@ -71,7 +71,7 @@ GTESTS += myTest
 compatibility rules file at the end of your `Makefile`:
 
 ```makefile
-include $(GTEST)/cfg/compat.RULES_BUILD
+-include $(GTEST)/cfg/compat.RULES_BUILD
 ```
 
 6.  Run `make test-results`.
