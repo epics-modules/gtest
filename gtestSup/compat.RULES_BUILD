@@ -13,7 +13,7 @@
 #   #----------------------------------------
 #   #  ADD RULES AFTER THIS LINE
 #
-#   include $(GTEST)/cfg/compat.RULES_BUILD
+#   -include $(GTEST)/cfg/compat.RULES_BUILD
 
 
 # Skip if we are running against a new enough base
