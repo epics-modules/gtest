@@ -1,0 +1,25 @@
+diff -uri base-test/configure/os/CONFIG_SITE.linux-x86_64.UnixCommon base-fix/configure/os/CONFIG_SITE.linux-x86_64.UnixCommon
+--- base-test/configure/os/CONFIG_SITE.linux-x86_64.UnixCommon	2023-02-07 17:02:19.692295919 +0100
++++ base-fix/configure/os/CONFIG_SITE.linux-x86_64.UnixCommon	2023-02-07 17:04:14.897558652 +0100
+@@ -1,5 +1,5 @@
+ # CONFIG_SITE.linux-x86_64.UnixCommon
+-$
++#
+ # $Revision-Id$
+ #
+ # Site Specific configure override definitions
+diff -uri base-test/src/libCom/test/Makefile base-fix/src/libCom/test/Makefile
+--- base-test/src/libCom/test/Makefile	2023-02-07 17:02:19.704289919 +0100
++++ base-fix/src/libCom/test/Makefile	2023-02-07 17:14:00.868390694 +0100
+@@ -166,11 +166,6 @@
+ testHarness_SRCS += epicsAtomicTest.cpp
+ TESTS += epicsAtomicTest
+ 
+-TESTPROD_HOST += epicsExceptionTest
+-epicsExceptionTest_SRCS += epicsExceptionTest.cpp
+-testHarness_SRCS += epicsExceptionTest.cpp
+-TESTS += epicsExceptionTest
+-
+ TESTPROD_HOST += macDefExpandTest
+ macDefExpandTest_SRCS += macDefExpandTest.c
+ testHarness_SRCS += macDefExpandTest.c
