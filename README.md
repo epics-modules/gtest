@@ -1,5 +1,5 @@
 <a target="_blank" href="http://semver.org">![Version][badge.version]</a>
-<a target="_blank" href="https://travis-ci.org/epics-modules/gtest">![Travis status][badge.travis]</a>
+<a target="_blank" href="https://github.com/epics-modules/gtest/actions/workflows/ci-scripts-build.yml">![GitHub Actions status][badge.gha]</a>
 <a target="_blank" href="https://ci.appveyor.com/project/epics-modules/gtest">![AppVeyor status][badge.appveyor]</a>
 
 # gtest - Google Test and Google Mock for EPICS
@@ -33,7 +33,8 @@ build system.
     file, full functionality is available with older releases
     (3.14.12.8 and above).
 
--   Googletest requires a compiler that implements the C++11 standard. \
+-   Googletest 1.10.x requires a compiler that implements the C++11
+    standard. \
     Microsoft Visual C++ needs to be from Visual Studio 2015 or newer.
     g++ needs to be 4.6 or above.
 
@@ -109,7 +110,7 @@ EPICS is distributed under the [EPICS Open License][license.epics].
 
 <!-- Links -->
 [badge.version]: https://badge.fury.io/gh/epics-modules%2Fgtest.svg
-[badge.travis]: https://travis-ci.org/epics-modules/gtest.svg?branch=master
+[badge.gha]: https://github.com/epics-modules/gtest/actions/workflows/ci-scripts-build.yml/badge.svg
 [badge.appveyor]: https://ci.appveyor.com/api/projects/status/0ei18dfxwkrq101o?svg=true
 
 [googletest]: https://github.com/google/googletest
