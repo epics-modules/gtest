@@ -205,8 +205,8 @@ jobs:
       matrix:
         # Job names also name artifacts, character limitations apply
         include:
-          - name: "CentOS-7"
-            image: centos:7
+          - name: "CentOS-8"
+            image: centos:8
             cmp: gcc
             configuration: default
             extra: "CMD_CXXFLAGS=-std=c++11"
@@ -224,28 +224,17 @@ jobs:
             extra: "CMD_CXXFLAGS=-std=c++11"
 
     steps:
-    - name: "Build newer Git"
-      # actions/checkout@v2 wants git >=2.18
-      # centos:7 has 1.8
-      if: matrix.image=='centos:7'
+    - name: "Fix repo URLs on CentOS-8"
+      # centos:8 is frozen, repos are in the vault
+      if: matrix.image=='centos:8'
       run: |
-        yum -y install curl make gcc curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker
-        curl https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.29.0.tar.gz | tar -xz
-        cd git-*
-        make -j2 prefix=/usr/local all
-        make prefix=/usr/local install
-        cd ..
-        rm -rf git-*
-        type -a git
-        git --version
+        sed -i -e "s|mirrorlist=|#mirrorlist=|" \
+        -e "s|#baseurl=http://mirror|baseurl=http://vault|" \
+        /etc/yum.repos.d/CentOS-Linux-{BaseOS,AppStream,Extras,Plus}.repo
     - name: "Redhat setup"
       run: |
-        dnfyum() {
-            dnf -y "$@" || yum -y "$@"
-            return $?
-        }
-        dnfyum install python3 gdb make perl gcc-c++ glibc-devel readline-devel ncurses-devel perl-devel perl-Test-Simple
-        git --version || dnfyum install git
+        dnf -y install python3 gdb make perl gcc-c++ glibc-devel readline-devel ncurses-devel perl-devel perl-Test-Simple
+        git --version || dnf -y install git
         # rather than just bite the bullet and link python3 -> python,
         # people would rather just break all existing scripts...
         [ -e /usr/bin/python ] || ln -sf python3 /usr/bin/python
@@ -255,10 +244,6 @@ jobs:
         submodules: true
     - name: Automatic core dumper analysis
       uses: mdavidsaver/ci-core-dumper@master
-      if: matrix.image!='centos:7'
-    - name: Automatic core dumper analysis
-      uses: mdavidsaver/ci-core-dumper@node16
-      if: matrix.image=='centos:7'
     - name: Prepare and compile dependencies
       run: python .ci/cue.py prepare
     - name: Build main module
