@@ -204,6 +204,11 @@ jobs:
             configuration: default
 
     steps:
+    - name: "Fix repo URLs"
+      # centos:7 is past EOL, repos are in the vault
+      if: matrix.image=='centos:7'
+      run: |
+        sed -i -e "s|mirrorlist=|#mirrorlist=|" -e "s|#baseurl=http://mirror|baseurl=http://vault|" /etc/yum.repos.d/CentOS-Base.repo
     - name: "Build newer Git"
       # actions/checkout@v2 wants git >=2.18
       # centos:7 has 1.8
