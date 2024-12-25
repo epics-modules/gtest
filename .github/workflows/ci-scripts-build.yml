@@ -211,6 +211,12 @@ jobs:
             configuration: default
             extra: "CMD_CXXFLAGS=-std=c++11"
 
+          - name: "Rocky-9"
+            image: rockylinux:9
+            cmp: gcc
+            configuration: default
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
           - name: "Fedora-33"
             image: fedora:33
             cmp: gcc
