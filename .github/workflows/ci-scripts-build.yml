@@ -19,6 +19,7 @@ on:
       - '.gitattributes'
       - '**/*.html'
       - '**/*.md'
+  workflow_dispatch:
 
 env:
     SETUP_PATH: .ci-local:.ci
@@ -229,11 +230,15 @@ jobs:
         # people would rather just break all existing scripts...
         [ -e /usr/bin/python ] || ln -sf python3 /usr/bin/python
         python --version
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: true
     - name: Automatic core dumper analysis
       uses: mdavidsaver/ci-core-dumper@master
+      if: matrix.image!='centos:7'
+    - name: Automatic core dumper analysis
+      uses: mdavidsaver/ci-core-dumper@node16
+      if: matrix.image=='centos:7'
     - name: Prepare and compile dependencies
       run: python .ci/cue.py prepare
     - name: Build main module
