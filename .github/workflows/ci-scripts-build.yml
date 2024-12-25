@@ -42,6 +42,20 @@ jobs:
       matrix:
         # Job names also name artifacts, character limitations apply
         include:
+          - name: "Ub-22 gcc-11 Base 7.0"
+            os: ubuntu-22.04
+            cmp: gcc
+            configuration: default
+            base: "7.0"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "Ub-22 gcc-11 static Base 7.0"
+            os: ubuntu-22.04
+            cmp: gcc
+            configuration: static
+            base: "7.0"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
           - name: "Ub-20 gcc-9 Base 7.0"
             os: ubuntu-20.04
             cmp: gcc
@@ -110,6 +124,13 @@ jobs:
 
           - name: "Ub-20 clang-10"
             os: ubuntu-20.04
+            cmp: clang
+            configuration: default
+            base: "7.0"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "Ub-22 clang-14"
+            os: ubuntu-22.04
             cmp: clang
             configuration: default
             base: "7.0"
