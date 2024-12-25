@@ -22,6 +22,8 @@ on:
 
 env:
     SETUP_PATH: .ci-local:.ci
+    EXTRA: "CMD_CXXFLAGS=-std=c++11"
+    BASE: "7.0"
 
 jobs:
   native:
@@ -45,29 +47,23 @@ jobs:
             os: ubuntu-20.04
             cmp: gcc
             configuration: default
-            base: "7.0"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Ub-20 gcc-9 static Base 7.0"
             os: ubuntu-20.04
             cmp: gcc
             configuration: static
-            base: "7.0"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Ub-20 gcc-9 Base 3.15"
             os: ubuntu-20.04
             cmp: gcc
             configuration: default
             base: "3.15"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Ub-20 gcc-9 static Base 3.15"
             os: ubuntu-20.04
             cmp: gcc
             configuration: static
             base: "3.15"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Ub-20 gcc-9 Base 3.15.3"
             os: ubuntu-20.04
@@ -75,7 +71,6 @@ jobs:
             configuration: default
             base: "R3.15.3"
             base_hook: ".ci-local/base-3.15-config-fix.patch"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Ub-20 gcc-9 static Base 3.15.3"
             os: ubuntu-20.04
@@ -83,82 +78,70 @@ jobs:
             configuration: static
             base: "R3.15.3"
             base_hook: ".ci-local/base-3.15-config-fix.patch"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Ub-20 gcc-9 Base 3.14.12.8"
             os: ubuntu-20.04
             cmp: gcc
             configuration: default
             base: "R3.14.12.8"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Ub-20 gcc-9 static Base 3.14.12.8"
             os: ubuntu-20.04
             cmp: gcc
             configuration: static
             base: "R3.14.12.8"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Ub-20 gcc-9 + MinGW64"
             os: ubuntu-20.04
             cmp: gcc
             configuration: default
-            base: "7.0"
-            extra: "CMD_CXXFLAGS=-std=c++11"
             cross: "windows-x64-mingw"
 
           - name: "Ub-20 clang-10"
             os: ubuntu-20.04
             cmp: clang
             configuration: default
-            base: "7.0"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "RTEMS 5"
             os: ubuntu-20.04
             cmp: gcc
             configuration: default
-            base: "7.0"
-            extra: "CMD_CXXFLAGS=-std=c++11"
             cross: "RTEMS-pc686-qemu@5"
 
           - name: "MacOS clang-12"
             os: macos-latest
             cmp: clang
             configuration: default
-            base: "7.0"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Win2019 MSC-19"
             os: windows-2019
             cmp: vs2019
             configuration: default
-            base: "7.0"
+            extra: ""
 
           - name: "Win2019 MSC-19 static"
             os: windows-2019
             cmp: vs2019
             configuration: static
-            base: "7.0"
+            extra: ""
 
           - name: "Win2019 MSC-19 debug"
             os: windows-2019
             cmp: vs2019
             configuration: debug
-            base: "7.0"
+            extra: ""
 
           - name: "Win2019 MSC-19 Base 3.15"
             os: windows-2019
             cmp: vs2019
             configuration: default
+            extra: ""
             base: "3.15"
 
           - name: "Win2019 mingw"
             os: windows-2019
             cmp: gcc
             configuration: default
-            base: "7.0"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
     steps:
     - uses: actions/checkout@v3
@@ -208,19 +191,16 @@ jobs:
             image: centos:7
             cmp: gcc
             configuration: default
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Fedora-33"
             image: fedora:33
             cmp: gcc
             configuration: default
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Fedora-latest"
             image: fedora:latest
             cmp: gcc
             configuration: default
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
     steps:
     - name: "Build newer Git"
