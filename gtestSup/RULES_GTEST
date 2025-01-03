@@ -20,35 +20,51 @@ TESTPROD_HOST += $(GTESTPROD_HOST)
 
 # Enable testing if this host can run tests for the current target
 ifneq (,$(findstring $(T_A),$(EPICS_HOST_ARCH) $(CROSS_COMPILER_RUNTEST_ARCHS)))
+
 RUNTESTS_ENABLED = YES
 GTESTLISTS = $(addsuffix .list,$(GTESTS))
 JUNITFILES = $(addsuffix -results.xml,$(GTESTS))
-endif
 
 #---------------------------------------------------------------
 # Automated testing using Google Test
 
-GTESTS_MAKE = $(addsuffix .make,$(GTESTS))
+# GTESTPROD_HOST executables only exist on host-type targets;
+# on others (e.g. RTEMS) Google Tests have to run inside a test harness
+ifneq (,$(findstring Host,$(VALID_BUILDS)))
+
 GTESTS_RUN = $(addsuffix .run,$(GTESTS))
 .PHONY: $(GTESTS_RUN)
 
 runtests: $(GTESTS_RUN)
 
-$(GTESTLISTS): %.list: %$(EXE)
-	@$(RM) $@
-	"./$<" --gtest_list_tests > $@
+define gtest_run_template
+$$($(1)_TAPFILES) $(1)-results.xml: $(1).run
+	@:
+$(1).run: export GTEST_TAP_FILENAME_PREFIX=$(1)-
+$(1).run: $(1)$$(EXE)
+	@$$(ECHO) "Running test $(1)..."
+	@"./$$<" --gtest_list_tests > $(1).tests
+	@$$(PERL) $$(GTEST_BIN)/testSuiteList.pl < $(1).tests > $(1).list
+	@"./$$<" --gtest_output_tap --gtest_color=yes --gtest_output=xml:$(1)-results.xml
+	@$$(ECHO) "test run" > $(1).run
+$(1)_TAPFILES = $(addprefix $(1)-,$(addsuffix .tap,$(file < $(1).list)))
+CLEANS += $(1).run $(1).tests $(1).list
+endef
 
-$(GTESTS_MAKE): %.make: %.list
-	@$(RM) $@
-	@$(PERL) $(GTEST_BIN)/makeFromList.pl $*
-
-include $(GTESTS_MAKE)
+$(foreach gtest, $(GTESTS), $(eval $(call gtest_run_template,$(gtest))))
 
 # Can't do "undefine TAPFILES" so only define TAPFILES here if non-empty
 # (avoid old test-results rule breaking for TAPFILES = <space>)
 ifneq ($(strip $(foreach gtest, $(GTESTS), $($(gtest)_TAPFILES))),)
 TAPFILES += $(foreach gtest, $(GTESTS), $($(gtest)_TAPFILES))
+else
+# If gtest TAPFILES don't exist (tests didn't run yet), run the tests 
+tapfiles: $(GTESTS_RUN)
 endif
+
+endif # host-type target
+
+endif # this host can run tests for the current target
 
 else
     $(warning Warning: cfg/RULES_GTEST file included more than once.)

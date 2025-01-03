@@ -12,7 +12,7 @@ LIBRARY_HOST += epics_gtest_main
 epics_gtest_main_SRCS += gtest_main.cc
 epics_gtest_main_LIBS += gmock gtest
 
-PERL_SCRIPTS += makeFromList.pl
+PERL_SCRIPTS += testSuiteList.pl
 
 CFG += RULES_GTEST
 CFG += compat.RULES_BUILD
