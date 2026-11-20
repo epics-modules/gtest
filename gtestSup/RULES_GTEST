@@ -28,6 +28,8 @@ endif
 #---------------------------------------------------------------
 # Automated testing using Google Test
 
+# Test discovery executes the target binaries on the build host.
+ifneq (,$(findstring $(T_A),$(EPICS_HOST_ARCH) $(CROSS_COMPILER_RUNTEST_ARCHS)))
 GTESTS_MAKE = $(addsuffix .make,$(GTESTS))
 GTESTS_RUN = $(addsuffix .run,$(GTESTS))
 .PHONY: $(GTESTS_RUN)
@@ -43,6 +45,7 @@ $(GTESTS_MAKE): %.make: %.list
 	@$(PERL) $(GTEST_BIN)/makeFromList.pl $*
 
 include $(GTESTS_MAKE)
+endif
 
 # Can't do "undefine TAPFILES" so only define TAPFILES here if non-empty
 # (avoid old test-results rule breaking for TAPFILES = <space>)
