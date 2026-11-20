@@ -13,10 +13,10 @@
 #include <epicsUnitTest.h>
 #include <testMain.h>
 
-const int valRight = 5;
-const int valWrong = 3;
-const short valAlsoWrong = 2;
-const int expected = 5;
+static const int valRight = 5;
+static const int valWrong = 3;
+static const short valAlsoWrong = 2;
+static const int expected = 5;
 
 MAIN(integerCompareTest)
 {

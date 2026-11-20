@@ -69,6 +69,7 @@ TESTSCRIPTS_HOST += $(TESTS:%=%.t)
 testHarness_SRCS += epicsRunSampleTests.c
 
 sampleTestHarness_SRCS += $(testHarness_SRCS)
+SRC_DIRS += $(TOP)/sampleApp
 sampleTestHarness_SRCS_RTEMS += rtemsTestHarness.c
 
 PROD_vxWorks = sampleTestHarness
