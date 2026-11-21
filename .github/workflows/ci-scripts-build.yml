@@ -22,7 +22,7 @@ on:
   workflow_dispatch:
 
 env:
-    SETUP_PATH: .ci-local:.ci
+  SETUP_PATH: .ci-local:.ci
 
 jobs:
   native:

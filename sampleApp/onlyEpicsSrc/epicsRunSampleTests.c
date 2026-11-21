@@ -12,12 +12,16 @@
 #include <epicsUnitTest.h>
 
 int stringCompareTest(void);
+int integerCompareTest(void);
+int dbUnitTest(void);
 
 void epicsRunSampleTests(void)
 {
     testHarness();
 
     runTest(stringCompareTest);
+    runTest(integerCompareTest);
+    runTest(dbUnitTest);
 
     testHarnessDone();
 }

@@ -29,14 +29,17 @@ PROD_LIBS = $(EPICS_BASE_IOC_LIBS)
 
 GTESTPROD_HOST += gsample1
 gsample1_SRCS += gsample1.cpp
+testHarness_SRCS += gsample1.cpp
 GTESTS += gsample1
 
 GTESTPROD_HOST += gsample2
 gsample2_SRCS += gsample2.cpp
+testHarness_SRCS += gsample2.cpp
 GTESTS += gsample2
 
 GTESTPROD_HOST += gsample3
 gsample3_SRCS += gsample3.cpp
+testHarness_SRCS += gsample3.cpp
 GTESTS += gsample3
 
 #=============================
@@ -69,7 +72,9 @@ TESTSCRIPTS_HOST += $(TESTS:%=%.t)
 testHarness_SRCS += epicsRunSampleTests.c
 
 sampleTestHarness_SRCS += $(testHarness_SRCS)
-sampleTestHarness_SRCS_RTEMS += rtemsTestHarness.c
+sampleTestHarness_SRCS_RTEMS += rtemsTestHarness.cpp
+
+sampleTestHarness_LIBS += gmock gtest
 
 PROD_vxWorks = sampleTestHarness
 PROD_RTEMS += sampleTestHarness
