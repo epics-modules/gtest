@@ -37,11 +37,40 @@ jobs:
       EXTRA: ${{ matrix.extra }}
       TEST: ${{ matrix.test }}
       BASE_HOOK: ${{ matrix.base_hook }}
+      USR_CFLAGS: ${{ matrix.usr_cflags }}
     strategy:
       fail-fast: false
       matrix:
         # Job names also name artifacts, character limitations apply
         include:
+          - name: "Ub-26 gcc-15 Base 7.0"
+            os: ubuntu-26.04
+            cmp: gcc
+            configuration: default
+            base: "7.0"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "Ub-26 gcc-15 static Base 7.0"
+            os: ubuntu-26.04
+            cmp: gcc
+            configuration: static
+            base: "7.0"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "Ub-24 gcc-13 Base 7.0"
+            os: ubuntu-24.04
+            cmp: gcc
+            configuration: default
+            base: "7.0"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "Ub-24 gcc-13 static Base 7.0"
+            os: ubuntu-24.04
+            cmp: gcc
+            configuration: static
+            base: "7.0"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
           - name: "Ub-22 gcc-11 Base 7.0"
             os: ubuntu-22.04
             cmp: gcc
@@ -56,78 +85,59 @@ jobs:
             base: "7.0"
             extra: "CMD_CXXFLAGS=-std=c++11"
 
-          - name: "Ub-20 gcc-9 Base 7.0"
-            os: ubuntu-20.04
+          - name: "Ub-26 gcc-15 Base 3.15"
+            os: ubuntu-26.04
             cmp: gcc
             configuration: default
-            base: "7.0"
+            base: "3.15"
             extra: "CMD_CXXFLAGS=-std=c++11"
+            # Base 3.15 flex sources are not C23-clean (gcc-15 default)
+            usr_cflags: "-std=gnu17"
 
-          - name: "Ub-20 gcc-9 static Base 7.0"
-            os: ubuntu-20.04
+          - name: "Ub-26 gcc-15 static Base 3.15"
+            os: ubuntu-26.04
             cmp: gcc
             configuration: static
-            base: "7.0"
+            base: "3.15"
             extra: "CMD_CXXFLAGS=-std=c++11"
+            # Base 3.15 flex sources are not C23-clean (gcc-15 default)
+            usr_cflags: "-std=gnu17"
 
-          - name: "Ub-20 gcc-9 Base 3.15"
-            os: ubuntu-20.04
+          - name: "Ub-24 gcc-13 Base 3.15"
+            os: ubuntu-24.04
             cmp: gcc
             configuration: default
             base: "3.15"
             extra: "CMD_CXXFLAGS=-std=c++11"
 
-          - name: "Ub-20 gcc-9 static Base 3.15"
-            os: ubuntu-20.04
+          - name: "Ub-24 gcc-13 static Base 3.15"
+            os: ubuntu-24.04
             cmp: gcc
             configuration: static
             base: "3.15"
             extra: "CMD_CXXFLAGS=-std=c++11"
 
-          - name: "Ub-20 gcc-9 Base 3.15.3"
-            os: ubuntu-20.04
+          - name: "Ub-22 gcc-11 Base 3.15"
+            os: ubuntu-22.04
             cmp: gcc
             configuration: default
-            base: "R3.15.3"
-            base_hook: ".ci-local/base-3.15-config-fix.patch"
+            base: "3.15"
             extra: "CMD_CXXFLAGS=-std=c++11"
 
-          - name: "Ub-20 gcc-9 static Base 3.15.3"
-            os: ubuntu-20.04
+          - name: "Ub-22 gcc-11 static Base 3.15"
+            os: ubuntu-22.04
             cmp: gcc
             configuration: static
-            base: "R3.15.3"
-            base_hook: ".ci-local/base-3.15-config-fix.patch"
+            base: "3.15"
             extra: "CMD_CXXFLAGS=-std=c++11"
 
-          - name: "Ub-20 gcc-9 Base 3.14.12.8"
-            os: ubuntu-20.04
-            cmp: gcc
-            configuration: default
-            base: "R3.14.12.8"
-            extra: "CMD_CXXFLAGS=-std=c++11"
-
-          - name: "Ub-20 gcc-9 static Base 3.14.12.8"
-            os: ubuntu-20.04
-            cmp: gcc
-            configuration: static
-            base: "R3.14.12.8"
-            extra: "CMD_CXXFLAGS=-std=c++11"
-
-          - name: "Ub-20 gcc-9 + MinGW64"
-            os: ubuntu-20.04
+          - name: "Ub-22 gcc-11 + MinGW64"
+            os: ubuntu-22.04
             cmp: gcc
             configuration: default
             base: "7.0"
             extra: "CMD_CXXFLAGS=-std=c++11"
             cross: "windows-x64-mingw"
-
-          - name: "Ub-20 clang-10"
-            os: ubuntu-20.04
-            cmp: clang
-            configuration: default
-            base: "7.0"
-            extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Ub-22 clang-14"
             os: ubuntu-22.04
@@ -136,54 +146,61 @@ jobs:
             base: "7.0"
             extra: "CMD_CXXFLAGS=-std=c++11"
 
-          - name: "RTEMS 5"
-            os: ubuntu-20.04
+          - name: "Ub-24 clang-18"
+            os: ubuntu-24.04
+            cmp: clang
+            configuration: default
+            base: "7.0"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "Ub-22 gcc + RT-5.1 pc686"
+            os: ubuntu-22.04
             cmp: gcc
             configuration: default
             base: "7.0"
             extra: "CMD_CXXFLAGS=-std=c++11"
             cross: "RTEMS-pc686-qemu@5"
 
-          - name: "MacOS clang-12"
+          - name: "MacOS clang"
             os: macos-latest
             cmp: clang
             configuration: default
             base: "7.0"
             extra: "CMD_CXXFLAGS=-std=c++11"
 
-          - name: "Win2019 MSC-19"
-            os: windows-2019
-            cmp: vs2019
+          - name: "Win-22 MSC-22"
+            os: windows-2022
+            cmp: vs2022
             configuration: default
             base: "7.0"
 
-          - name: "Win2019 MSC-19 static"
-            os: windows-2019
-            cmp: vs2019
+          - name: "Win-22 MSC-22 static"
+            os: windows-2022
+            cmp: vs2022
             configuration: static
             base: "7.0"
 
-          - name: "Win2019 MSC-19 debug"
-            os: windows-2019
-            cmp: vs2019
+          - name: "Win-22 MSC-22 debug"
+            os: windows-2022
+            cmp: vs2022
             configuration: debug
             base: "7.0"
 
-          - name: "Win2019 MSC-19 Base 3.15"
-            os: windows-2019
-            cmp: vs2019
+          - name: "Win-22 MSC-22 Base 3.15"
+            os: windows-2022
+            cmp: vs2022
             configuration: default
             base: "3.15"
 
-          - name: "Win2019 mingw"
-            os: windows-2019
+          - name: "Win-22 mingw"
+            os: windows-2022
             cmp: gcc
             configuration: default
             base: "7.0"
             extra: "CMD_CXXFLAGS=-std=c++11"
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: true
     - name: Automatic core dumper analysis
@@ -201,7 +218,7 @@ jobs:
       run: python .ci/cue.py -T 60M test
     - name: Upload tapfiles Artifact
       if: ${{ always() }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: tapfiles ${{ matrix.name }}
         path: '**/O.*/*.tap'
@@ -219,8 +236,10 @@ jobs:
     env:
       CMP: ${{ matrix.cmp }}
       BCFG: ${{ matrix.configuration }}
+      BASE: ${{ matrix.base }}
       EXTRA: ${{ matrix.extra }}
       TEST: ${{ matrix.test }}
+      BASE_HOOK: ${{ matrix.base_hook }}
     strategy:
       fail-fast: false
       matrix:
@@ -230,6 +249,36 @@ jobs:
             image: centos:8
             cmp: gcc
             configuration: default
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "CentOS-8 Base 3.15.3"
+            image: centos:8
+            cmp: gcc
+            configuration: default
+            base: "R3.15.3"
+            base_hook: ".ci-local/base-3.15-config-fix.patch"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "CentOS-8 static Base 3.15.3"
+            image: centos:8
+            cmp: gcc
+            configuration: static
+            base: "R3.15.3"
+            base_hook: ".ci-local/base-3.15-config-fix.patch"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "CentOS-8 Base 3.14.12.8"
+            image: centos:8
+            cmp: gcc
+            configuration: default
+            base: "R3.14.12.8"
+            extra: "CMD_CXXFLAGS=-std=c++11"
+
+          - name: "CentOS-8 static Base 3.14.12.8"
+            image: centos:8
+            cmp: gcc
+            configuration: static
+            base: "R3.14.12.8"
             extra: "CMD_CXXFLAGS=-std=c++11"
 
           - name: "Rocky-9"
@@ -260,30 +309,27 @@ jobs:
         /etc/yum.repos.d/CentOS-Linux-{BaseOS,AppStream,Extras,Plus}.repo
     - name: "Redhat setup"
       run: |
-        dnf -y install python3 gdb make perl gcc-c++ glibc-devel readline-devel ncurses-devel perl-devel perl-Test-Simple
+        dnf -y install python3 gdb make patch perl gcc-c++ glibc-devel readline-devel ncurses-devel perl-devel perl-Test-Simple
         git --version || dnf -y install git
-        # rather than just bite the bullet and link python3 -> python,
-        # people would rather just break all existing scripts...
-        [ -e /usr/bin/python ] || ln -sf python3 /usr/bin/python
-        python --version
-    - uses: actions/checkout@v4
+        python3 --version
+    - uses: actions/checkout@v6
       with:
         submodules: true
     - name: Automatic core dumper analysis
       uses: mdavidsaver/ci-core-dumper@master
     - name: Prepare and compile dependencies
-      run: python .ci/cue.py prepare
+      run: python3 .ci/cue.py prepare
     - name: Build main module
-      run: python .ci/cue.py build
+      run: python3 .ci/cue.py build
     - name: Run main module tests
-      run: python .ci/cue.py -T 20M test
+      run: python3 .ci/cue.py -T 20M test
     - name: Upload tapfiles Artifact
       if: ${{ always() }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: tapfiles ${{ matrix.name }}
         path: '**/O.*/*.tap'
         if-no-files-found: ignore
     - name: Collect and show test results
       if: ${{ always() }}
-      run: python .ci/cue.py -T 5M test-results
+      run: python3 .ci/cue.py -T 5M test-results
