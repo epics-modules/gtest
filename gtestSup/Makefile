@@ -14,6 +14,8 @@ epics_gtest_main_LIBS += gmock gtest
 
 PERL_SCRIPTS += testSuiteList.pl
 
+INC += tap.h
+
 CFG += RULES_GTEST
 CFG += compat.RULES_BUILD
 
