@@ -15,9 +15,9 @@
 #include <epicsUnitTest.h>
 #include <testMain.h>
 
-const char *valRight = "hello EPICS";
-const char *valWrong = "hello google";
-const char *expected = "hello EPICS";
+static const char *valRight = "hello EPICS";
+static const char *valWrong = "hello google";
+static const char *expected = "hello EPICS";
 
 MAIN(stringCompareTest)
 {
